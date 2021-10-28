@@ -108,6 +108,7 @@ class StripeWH_Handler:
                 status=200)
         else:
             order = None
+            bag = intent.metadata.bag
             try:
                 order = Order.objects.create(
                     full_name=shipping_details.name,
@@ -151,6 +152,7 @@ class StripeWH_Handler:
         return HttpResponse(
             content=f'Webhook received: {event["type"]} | SUCCESS: Created order in webhook',
             status=200)
+
 
     def handle_payment_intent_failed(self, event):
         """
